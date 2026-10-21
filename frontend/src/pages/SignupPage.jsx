@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { getErrorMessage } from "../api";
 import { useAuth } from "../context/AuthContext";
-import { validateAddress, validateEmail,  validateName, validatePassword } from "../validation";
+import { validateAddress, validateEmail, validateName, validatePassword } from "../validation";
 
 // Register a normal user after checking every account field.
 export default function SignupPage() {
@@ -16,6 +16,7 @@ export default function SignupPage() {
   });
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   // Validate the form, create an account, and open the user store list.
   async function handleSubmit(event) {
@@ -61,7 +62,22 @@ export default function SignupPage() {
             <textarea value={form.address} onChange={(event) => setForm({ ...form, address: event.target.value })} maxLength="400" rows="3" />
           </label>
           <label>Password
-            <input type="password" value={form.password} onChange={(event) => setForm({ ...form, password: event.target.value })} required minLength="8" maxLength="16" />
+            <span className="password-field">
+              <input type={showPassword ? "text" : "password"} value={form.password} onChange={(event) => setForm({ ...form, password: event.target.value })} required minLength="8" maxLength="16" />
+              <button
+                type="button"
+                className="password-toggle"
+                aria-label={showPassword ? "Hide password" : "Show password"}
+                aria-pressed={showPassword}
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                  <path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7Z" />
+                  <circle cx="12" cy="12" r="3" />
+                  {showPassword && <path d="m4 4 16 16" />}
+                </svg>
+              </button>
+            </span>
           </label>
           <button className="button button-primary full-width" disabled={busy}>
             {busy ? "Creating account..." : "Create account"}
