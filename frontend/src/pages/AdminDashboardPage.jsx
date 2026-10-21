@@ -22,7 +22,8 @@ export default function AdminDashboardPage() {
     name: "", email: "", password: "", address: "", role: "user",
   });
   const [storeForm, setStoreForm] = useState({
-    name: "", email: "", address: "", ownerId: "", });
+    name: "", email: "", address: "", ownerId: "",
+  });
   const [error, setError] = useState("");
   const [notice, setNotice] = useState("");
 
@@ -153,7 +154,6 @@ export default function AdminDashboardPage() {
             <p className="muted">Manage platform accounts and stores.</p>
           </div>
         </div>
-        {error && <p className="alert alert-error">{error}</p>}
         {notice && <p className="alert alert-success">{notice}</p>}
 
         <section className="stat-grid">
